@@ -125,4 +125,7 @@
 
 ## 内部設計
 
+### DFD
 
+![DFD_Lv.0](Documents/images/KendoClub_KeyManagementWebApp_DFD/スライド1.JPG)
+![DFD_Lv.1](Documents/images/KendoClub_KeyManagementWebApp_DFD/スライド2.JPG)

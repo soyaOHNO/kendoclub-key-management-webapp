@@ -1,0 +1,452 @@
+/* ==============================
+   共通CSS（全ページ共通）
+   ファイル名: src/styles/common.css
+   ============================== */
+
+/* リセット & 基本設定 */
+* {
+  box-sizing: border-box;
+}
+
+/* ===== ヘッダー ===== */
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;                 /* ← 大きく */
+  background-color: #1e3a8a;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+
+  padding: 0 20px;              /* 余白も少し増やす */
+  z-index: 1000;
+}
+
+
+/* 戻るボタン */
+.back-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 8px 12px;            /* タップ領域拡大 */
+  border-radius: 8px;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+
+/* ページタイトル */
+.header-title {
+  text-align: center;
+  color: white;
+  font-size: 32px;              /* ← 大きく */
+  font-weight: 1000;
+  margin: auto;
+  letter-spacing: 0.04em;
+}
+
+
+/* 右側ダミー */
+.header-right {
+  width: 48px;
+}
+
+
+/* ===== 全体共通 ===== */
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+}
+
+h1, h2, h3 {
+  margin-bottom: 16px;
+}
+
+/* ===== ヘッダー下コンテンツ共通 ===== */
+.page-content {
+  margin-top: 100px; /* ヘッダー分の余白 */
+  min-height: calc(100vh - 100px); /* ヘッダー分を引く */
+  padding: 24px 16px 40px;
+}
+
+/* コンテナ */
+.container {
+  margin-top: 72px; /* ヘッダー分の余白 */
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* フォーム共通 */
+select,
+input[type="text"],
+input[type="password"],
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+select:focus,
+input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* ボタン */
+button {
+  padding: 10px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #427eff;
+  color: #fff;
+}
+
+button:hover {
+  background-color: #1143da;
+}
+
+button.secondary {
+  background-color: #6b7280;
+}
+
+button.secondary:hover {
+  background-color: #4b5563;
+}
+
+/* メッセージ */
+.message {
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.message.error {
+  color: #dc2626;
+}
+
+.message.success {
+  color: #16a34a;
+}
+
+/* テーブル */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+thead {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+th, td {
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+/* トップ画面用メニュー */
+.menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.menu button {
+  padding: 20px;
+  font-size: 16px;
+}
+
+
+/* ===== ダッシュボード ===== */
+.dashboard-container {
+  min-height: calc(100vh - 60px);
+  background: linear-gradient(180deg, #f8fafc, #f1f5f9);
+  padding: 24px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: #0f172a;
+  letter-spacing: 0.02em;
+}
+
+/* ===== ステータス表示 ===== */
+.status-cards {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 40px;
+}
+
+.status-card {
+  flex: 1; /* 均等に広がる */
+  background: white;
+  border-radius: 16px;
+  min-width: 120px;
+  max-width: 180px;
+  padding: 15px 10px;
+  text-align: center;
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.08),
+    0 1px 3px rgba(15, 23, 42, 0.05);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+
+
+.status-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 20px rgba(15, 23, 42, 0.12),
+    0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+.status-label {
+  font-size: 28px;
+  color: #000000;
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* 数字を目立たせる */
+.status-number {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1.1;
+}
+
+.status-card.borrowed .status-number {
+  color: #dc2626;
+}
+
+.status-card.stored .status-number {
+  color: #16a34a;
+}
+
+
+/* ===== ボタン ===== */
+.dashboard-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.primary-button {
+  padding: 14px 16px;
+  font-size: 17px;
+  font-weight: 700;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(180deg, #2563eb, #1d4ed8);
+  color: white;
+  cursor: pointer;
+  box-shadow:
+    0 6px 14px rgba(37, 99, 235, 0.35);
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    filter 0.12s ease;
+}
+
+.primary-button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow:
+    0 10px 20px rgba(37, 99, 235, 0.45);
+}
+
+.primary-button:active {
+  transform: translateY(0);
+  box-shadow:
+    0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+/* ===== レスポンシブ微調整 ===== */
+@media (min-width: 640px) {
+  .dashboard-title {
+    font-size: 24px;
+  }
+}
+
+/* ==============================
+   鍵貸出ページ
+   ============================== */
+
+/* 見出し */
+.container h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  text-align: center;
+}
+
+/* セレクトボックス共通 */
+.container select {
+  font-size: 15px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5f5;
+  background-color: #f8fafc;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.container select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* 貸出ボタン */
+.container button {
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px;
+  font-size: 17px;
+  font-weight: 700;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(180deg, #2563eb, #1d4ed8);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.container button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.45);
+}
+
+.container button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+/* トップへ戻るボタン（区別したいので少し控えめ） */
+.container > div:last-child button {
+  margin-top: 20px;
+  background: #e5e7eb;
+  color: #1f2933;
+  box-shadow: none;
+}
+
+.container > div:last-child button:hover {
+  background: #d1d5db;
+}
+
+/* ポップアップ（成功メッセージ） */
+.borrow-popup {
+  position: fixed;
+  top: 88px; /* ヘッダー下 */
+  right: 20px;
+  background: #16a34a;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  animation: slideIn 0.3s ease;
+  z-index: 2000;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ==============================
+   利用者一括登録（Excel）
+   ============================== */
+
+.bulk-register-box {
+  margin-top: 32px;   /* ← ここを追加 or 増やす */
+  padding: 20px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.bulk-description {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+/* ファイル選択 */
+.bulk-register-box input[type="file"] {
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+/* 危険操作ボタン */
+.danger-button {
+  width: 100%;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(180deg, #dc2626, #b91c1c);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(220, 38, 38, 0.35);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.danger-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(220, 38, 38, 0.45);
+}
+
+.danger-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+}
+
+/* メッセージ表示 */
+.upload-message {
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+}

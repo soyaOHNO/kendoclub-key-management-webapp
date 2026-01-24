@@ -5,7 +5,7 @@ import ReturnKeyPage from "./components/ReturnKeyPage";
 import HistoryPage from "./components/HistoryPage";
 import AdminPage from "./components/AdminPage";
 import AuthGuard from "./components/AuthGuard";
-import "./styles/common.css";
+import "./styles/App.css";
 
 
 function App() {

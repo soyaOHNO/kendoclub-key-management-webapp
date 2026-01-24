@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
 import {collection, getDocs, addDoc, updateDoc, doc, serverTimestamp, } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 function BorrowKeyPage() {
     const [users, setUsers] = useState([]);
@@ -21,7 +22,7 @@ function BorrowKeyPage() {
         const keySnap = await getDocs(collection(db, "keys")); // DBの keys コレクション
         // filterで保管中の鍵を抽出
         setKeys(keySnap.docs.map((doc) =>
-                ({id: doc.id, ...doc.data(),})).filter((key) => key.status === "保管中"));
+                ({id: doc.id, ...doc.data(),})).filter((key) => key.status === "stored"));
     };
 
     // 初回レンダリング時にデータ取得
@@ -42,8 +43,8 @@ function BorrowKeyPage() {
                 returned_at: null,
             });
             const keyRef = doc(db, "keys", selectedKey);
-            await updateDoc(keyRef, {status: "貸出中",});
-            setMessage("貸出完了");
+            await updateDoc(keyRef, {status: "borrowed",});
+            setMessage("貸し出し完了");
             await fetchData(); // データ更新
         } catch (e) {
             console.error(e);
@@ -56,45 +57,39 @@ function BorrowKeyPage() {
     };
     
     return (
-        <div className="container">
-            <h2>鍵貸出</h2>
-            {/* 利用者選択 */}
-            <select onChange={(e) => setSelectedUser(e.target.value)}>
-                <option value="">利用者を選択</option>
-                {users.map((user) => (
-                    <option key={user.id} value={user.id}>
-                        {user.id} {user.name}
-                    </option>
-                ))}
-            </select>
+        <>
+            <Header title="鍵の貸出ページ" />
+            <div className="container">
+                <h2>鍵貸出</h2>
+                {/* 利用者選択 */}
+                <select onChange={(e) => setSelectedUser(e.target.value)}>
+                    <option value="">利用者を選択</option>
+                    {users.map((user) => (
+                        <option key={user.id} value={user.id}>
+                            {user.id} {user.name}
+                        </option>
+                    ))}
+                </select>
 
-            {/* 鍵選択 */}
-            <select onChange={(e) => setSelectedKey(e.target.value)}>
-                <option value="">鍵を選択</option>
-                {keys.map((key) => (
-                    <option key={key.id} value={key.id}>{key.name}</option>
-                ))}
-            </select>
+                {/* 鍵選択 */}
+                <select onChange={(e) => setSelectedKey(e.target.value)}>
+                    <option value="">鍵を選択</option>
+                    {keys.map((key) => (
+                        <option key={key.id} value={key.id}>{key.name}</option>
+                    ))}
+                </select>
 
-            <button onClick={handleBorrow}>貸出</button>
-            {showPopup && (
-                <div style={{
-                    position: "fixed",
-                    top: "20px",
-                    right: "20px",
-                    backgroundColor: "#4CAF50",
-                    color: "white",
-                    padding: "12px 20px",
-                    borderRadius: "6px",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.3)"
-                }}>
-                    {message}
+                <button onClick={handleBorrow}>貸出</button>
+                {showPopup && (
+                    <div className="borrow-popup">
+                        {message}
+                    </div>
+                )}
+                <div>
+                    <button onClick={() => navigate("/")}>トップページに戻る</button>
                 </div>
-            )}
-            <div>
-                <button onClick={() => navigate("/")}>トップページに戻る</button>
             </div>
-        </div>
+        </>
     );
 }
 

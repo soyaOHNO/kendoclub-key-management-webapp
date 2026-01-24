@@ -3,6 +3,7 @@ import { db } from "../firebase/firebase";
 import * as XLSX from "xlsx";
 import {collection, getDocs, deleteDoc, doc, setDoc} from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 function HistoryPage() {
     const [logs, setLogs] = useState([]);
@@ -18,7 +19,7 @@ function HistoryPage() {
             log.studentName,
             log.keyName,
             log.borrowed_at ? log.borrowed_at.toDate().toLocaleString() : "",
-            log.returned_at ? log.returned_at.toDate().toLocaleString() : "貸出中",
+            log.returned_at ? log.returned_at.toDate().toLocaleString() : "borrowed",
         ]);
         const csvContent = [header.join(","), ...rows.map(row => row.join(",")), ].join("\n");
         return csvContent;
@@ -45,7 +46,7 @@ function HistoryPage() {
             利用者: log.studentName,
             鍵: log.keyName,
             貸出日時: log.borrowed_at ? log.borrowed_at.toDate().toLocaleString() : "",
-            返却日時: log.returned_at ? log.returned_at.toDate().toLocaleString() : "貸出中",
+            返却日時: log.returned_at ? log.returned_at.toDate().toLocaleString() : "borrowed",
         }));
         // ワークシート作成
         const worksheet = XLSX.utils.json_to_sheet(sheetData);
@@ -147,46 +148,54 @@ function HistoryPage() {
 
 
     return (
-        <div className="container">
-        <h2>履歴一覧</h2>
-        <button onClick={handleDownloadCSV}>CSV出力</button>
-        <button onClick={handleDownloadExcel}>Excel出力</button>
-        <div>
-            <button onClick={() => navigate("/")}>トップページに戻る</button>
-        </div>
+        <>
+            <Header title="管理者ページ" />
+            <div className="container">
+            <h2>履歴一覧</h2>
+            <button onClick={handleDownloadCSV}>CSV出力</button>
+            <button onClick={handleDownloadExcel}>Excel出力</button>
+            <div>
+                <button onClick={() => navigate("/")}>トップページに戻る</button>
+            </div>
 
-        <h3>利用者一括登録（Excel）</h3>
 
-        <input
-        type="file"
-        accept=".xlsx,.xls"
-        onChange={(e) => setExcelFile(e.target.files[0])}
-        />
-        <button onClick={handleUploadUsers}>Firestoreに反映</button>
-        <p>{uploadMessage}</p>
-        <hr />
+            <div className="bulk-register-box">
+                <h2>利用者一括登録（Excel）</h2>
+                <p className="bulk-description">
+                    Excelファイルをアップロードすると、既存の利用者情報を削除した上で
+                    新しい利用者を一括登録します。
+                </p>
+                <input
+                    type="file"
+                    accept=".xlsx,.xls"
+                    onChange={(e) => setExcelFile(e.target.files[0])}
+                />
+                <button className="danger-button" onClick={handleUploadUsers}>Firestoreに反映</button>
+                {uploadMessage && (<p className="upload-message">{uploadMessage}</p>)}
+            </div>
 
-        <table border="1">
-            <thead>
-            <tr>
-                <th>利用者</th>
-                <th>鍵</th>
-                <th>貸出日時</th>
-                <th>返却日時</th>
-            </tr>
-            </thead>
-            <tbody>
-                {logs.map(log => (
-                    <tr key={log.id}>
-                        <td>{log.studentName}</td>
-                        <td>{log.keyName}</td>
-                        <td>{log.borrowed_at?.toDate().toLocaleString()}</td>
-                        <td>{log.returned_at ? log.returned_at.toDate().toLocaleString() : "未返却"}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-        </div>
+            <table border="1">
+                <thead>
+                <tr>
+                    <th>利用者</th>
+                    <th>鍵</th>
+                    <th>貸出日時</th>
+                    <th>返却日時</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {logs.map(log => (
+                        <tr key={log.id}>
+                            <td>{log.studentName}</td>
+                            <td>{log.keyName}</td>
+                            <td>{log.borrowed_at?.toDate().toLocaleString()}</td>
+                            <td>{log.returned_at ? log.returned_at.toDate().toLocaleString() : "未返却"}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            </div>
+        </>
     );
 }
 

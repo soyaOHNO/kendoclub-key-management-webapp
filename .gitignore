@@ -1,24 +1,36 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# node / npm
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# build / dist
+build/
+dist/
 
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
+# env files（Firebaseキーなど）
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/
+
+# Excel / CSV 出力（履歴エクスポート系）
+*.csv
+*.xlsx
+
+# logs
+*.log

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
 import {collection, getDocs, query, where, updateDoc, doc, serverTimestamp, } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 function ReturnKeyPage() {
     const [users, setUsers] = useState([]);
@@ -9,6 +10,7 @@ function ReturnKeyPage() {
     const [selectedKey, setSelectedKey] = useState("");
     const [message, setMessage] = useState("");
     const [showPopup, setShowPopup] = useState(false);
+    const navigate = useNavigate();
 
 
     // 利用者・鍵を取得
@@ -66,7 +68,7 @@ function ReturnKeyPage() {
     };
 
     return (
-        <div>
+        <div className="container">
             <h2>鍵返却画面</h2>
             {/* 利用者選択 */}
             <select onChange={(e) => setSelectedUser(e.target.value)}>
@@ -101,7 +103,9 @@ function ReturnKeyPage() {
                     {message}
                 </div>
             )}
-
+            <div>
+                <button onClick={() => navigate("/")}>トップページに戻る</button>
+            </div>
         </div>
     );
 }

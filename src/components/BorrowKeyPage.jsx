@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
 import {collection, getDocs, addDoc, updateDoc, doc, serverTimestamp, } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 function BorrowKeyPage() {
     const [users, setUsers] = useState([]);
@@ -9,6 +10,7 @@ function BorrowKeyPage() {
     const [selectedKey, setSelectedKey] = useState("");
     const [message, setMessage] = useState("");
     const [showPopup, setShowPopup] = useState(false);
+    const navigate = useNavigate();
 
     // 利用者・鍵を取得
     const fetchData = async () => {
@@ -54,7 +56,7 @@ function BorrowKeyPage() {
     };
     
     return (
-        <div>
+        <div className="container">
             <h2>鍵貸出</h2>
             {/* 利用者選択 */}
             <select onChange={(e) => setSelectedUser(e.target.value)}>
@@ -89,6 +91,9 @@ function BorrowKeyPage() {
                     {message}
                 </div>
             )}
+            <div>
+                <button onClick={() => navigate("/")}>トップページに戻る</button>
+            </div>
         </div>
     );
 }

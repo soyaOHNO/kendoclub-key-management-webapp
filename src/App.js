@@ -1,44 +1,25 @@
-// // local build: > npm start
-import React from "react";
-
-// import ReturnKeyPage from "./components/ReturnKeyPage";
-
-// function App() {
-//   return (
-//     <div style={{ padding: "20px" }}>
-//       <ReturnKeyPage />
-//     </div>
-//   );
-// }
-
-// export default App;
-
-// import BorrowKeyPage from "./components/BorrowKeyPage";
-
-// function App() {
-//   return (
-//     <div style={{ padding: "20px" }}>
-//       <h1>鍵管理システム（テスト）</h1>
-
-//       {/* S-02 鍵貸出画面のテスト */}
-//       <BorrowKeyPage />
-//     </div>
-//   );
-// }
-
-// export default App;
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import TopPage from "./components/TopPage";
+import BorrowKeyPage from "./components/BorrowKeyPage";
+import ReturnKeyPage from "./components/ReturnKeyPage";
 import HistoryPage from "./components/HistoryPage";
+import AdminPage from "./components/AdminPage";
+import AuthGuard from "./components/AuthGuard";
+import "./styles/common.css";
+
 
 function App() {
-  return (
-    <div style={{ padding: "20px" }}>
-      <h1>鍵管理システム（テスト）</h1>
-
-      {/* S-02 鍵貸出画面のテスト */}
-      <HistoryPage />
-    </div>
-  );
+    return (
+      <BrowserRouter>
+          <Routes>
+              <Route path="/" element={<TopPage />} />
+              <Route path="/lend" element={<BorrowKeyPage />} />
+              <Route path="/return" element={<ReturnKeyPage />} />
+              <Route path="/admin" element={<AdminPage />} />
+              <Route path="/logs" element={<AuthGuard><HistoryPage /></AuthGuard>} />
+          </Routes>
+      </BrowserRouter>
+    );
 }
 
 export default App;

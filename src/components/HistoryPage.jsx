@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
 import * as XLSX from "xlsx";
-import {collection, getDocs,} from "firebase/firestore";
+import {collection, getDocs, deleteDoc, doc, setDoc} from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 function HistoryPage() {
     const [logs, setLogs] = useState([]);
+    const navigate = useNavigate();
+    const [excelFile, setExcelFile] = useState(null);
+    const [uploadMessage, setUploadMessage] = useState("");
+
 
     const createCSV = () => {
         const header = ["利用者", "鍵", "貸出日時", "返却日時"];
@@ -51,6 +56,59 @@ function HistoryPage() {
         XLSX.writeFile(workbook, `岡山大学剣道部_鍵利用_${new Date().toISOString()}.xlsx`);
     };
 
+    const deleteAllUsers = async () => {
+        const snap = await getDocs(collection(db, "users"));
+        for (const d of snap.docs) {
+            await deleteDoc(doc(db, "users", d.id));
+        }
+    };
+
+
+    const handleUploadUsers = async () => {
+        if (!excelFile) {
+            setUploadMessage("Excelファイルを選択してください");
+            return;
+        }
+
+        try {
+            setUploadMessage("既存ユーザーを削除中...");
+            // ① users全削除
+            await deleteAllUsers();
+            setUploadMessage("既存ユーザーを削除しました。Excelを処理中...");
+            const data = await excelFile.arrayBuffer();
+            const workbook = XLSX.read(data);
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+
+            const rows = XLSX.utils.sheet_to_json(sheet);
+
+            let count = 0;
+
+            for (const row of rows) {
+            // 削除フラグが1の行は無視
+            if (row["削除(誤って登録した場合に1を記入)"] === 1 || row["削除(誤って登録した場合に1を記入)"] === "1") continue;
+
+            const studentId = String(row["学生番号"]);
+            const name = row["氏名"];
+
+            if (!studentId || !name) continue;
+
+            await setDoc(
+                doc(db, "users", studentId),
+                { name },
+                { merge: true }
+            );
+
+            count++;
+            }
+
+            setUploadMessage(`${count} 件の利用者を登録・更新しました`);
+        } catch (e) {
+            console.error(e);
+            setUploadMessage("Excelの処理に失敗しました");
+        }
+    };
+
+
 
     useEffect(() => {
         // 利用者・鍵・ログを取得
@@ -89,10 +147,24 @@ function HistoryPage() {
 
 
     return (
-        <div>
+        <div className="container">
         <h2>履歴一覧</h2>
         <button onClick={handleDownloadCSV}>CSV出力</button>
         <button onClick={handleDownloadExcel}>Excel出力</button>
+        <div>
+            <button onClick={() => navigate("/")}>トップページに戻る</button>
+        </div>
+
+        <h3>利用者一括登録（Excel）</h3>
+
+        <input
+        type="file"
+        accept=".xlsx,.xls"
+        onChange={(e) => setExcelFile(e.target.files[0])}
+        />
+        <button onClick={handleUploadUsers}>Firestoreに反映</button>
+        <p>{uploadMessage}</p>
+        <hr />
 
         <table border="1">
             <thead>

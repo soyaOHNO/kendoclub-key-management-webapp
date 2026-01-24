@@ -47,7 +47,7 @@
 .header-title {
   text-align: center;
   color: white;
-  font-size: 32px;              /* ← 大きく */
+  font-size: 24px;              /* ← 大きく */
   font-weight: 1000;
   margin: auto;
   letter-spacing: 0.04em;

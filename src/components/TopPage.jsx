@@ -38,7 +38,7 @@ function Dashboard() {
 
   return (
     <>
-      <Header title="岡山大学剣道部 鍵管理システム" />
+      <Header title="岡山大学剣道部鍵管理システム" />
 
       <div className="page-content dashboard-container">
         <div className="status-cards" key={`${borrowedCount}-${storedCount}`}>

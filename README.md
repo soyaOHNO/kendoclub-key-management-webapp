@@ -6,6 +6,13 @@
 ## 公開URL
 [https://tsushimakendo-key-management.web.app/](https://tsushimakendo-key-management.web.app/)
 
+## ドキュメント
+- [要求定義書](Documents/requirements.md)
+- [ユースケース図](Documents/images/KendoClub_KeyManagementWebApp_UML.jpg)
+- [設計書](Documents/design.md)
+- [DFD](Documents/DFD.md)
+- [ER図](Documents/ER.md)
+
 ## 主な機能
 - **リアルタイムダッシュボード**: 貸出中・保管中の本数をリアルタイムで表示。
 - **鍵の貸出・返却機能**: 誰がどの鍵を操作したかをFirestoreに記録。

@@ -7,11 +7,11 @@
 [https://tsushimakendo-key-management.web.app/](https://tsushimakendo-key-management.web.app/)
 
 ## ドキュメント
-- [要求定義書](Documents/requirements.md)
-- [ユースケース図](Documents/images/KendoClub_KeyManagementWebApp_UML.jpg)
-- [設計書](Documents/design.md)
-- [DFD](Documents/DFD.md)
-- [ER図](Documents/ER.md)
+- [要求定義書](RequirementSpecification/Documents/requirements.md)
+- [ユースケース図](RequirementSpecification/Documents/images/KendoClub_KeyManagementWebApp_UML.jpg)
+- [設計書](RequirementSpecification/Documents/design.md)
+- [DFD](RequirementSpecification/Documents/DFD.md)
+- [ER図](RequirementSpecification/Documents/ER.md)
 
 ## 主な機能
 - **リアルタイムダッシュボード**: 貸出中・保管中の本数をリアルタイムで表示。
@@ -24,6 +24,7 @@
 - **Hosting**: Firebase Hosting
 
 ## ディレクトリ構造
+- `RequirementSpecification`: 要求定義書，設計書
 - `src/components`: Reactコンポーネント（TopPage.jsx, BorrowKeyPage.jsx等）
 - `src/firebase`: Firebaseの初期化設定
 - `src/styles`: CSS
